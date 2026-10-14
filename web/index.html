@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Management System | St. Thomas College of Engg & Tech</title>
+    <link rel="stylesheet" href="css/style.css?v=4">
+    <!-- Google Fonts for sleek clinical typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ========================================================= -->
+    <!-- 1. PORTAL GATEWAY / DIRECTORY (CHOOSE SEPARATE PORTAL)   -->
+    <!-- ========================================================= -->
+    <div id="portalDirectoryScreen" class="gateway-screen">
+        <div class="gateway-container">
+            <!-- Header -->
+            <div class="gateway-header">
+                <div class="brand-logo gateway-logo">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="10"/></svg>
+                </div>
+                <h1 class="gateway-title">St. Thomas Pharmacy Management System</h1>
+                <p class="gateway-subtitle">Online Medicine Access & Doctor Consultation Platform</p>
+                <div class="college-pill">St. Thomas College of Engineering & Technology, Kannur • Academic Year 2026-27</div>
+                <h2 class="portal-select-prompt">Select Your Dedicated Portal to Sign In</h2>
+            </div>
+
+            <!-- 4 Separate Portal Cards -->
+            <div class="portals-grid">
+                <!-- Patient Portal Card -->
+                <div class="portal-card card-patient" onclick="openDedicatedLogin('PATIENT')">
+                    <div class="portal-icon icon-patient">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <h3>Patient Portal</h3>
+                    <p>Search available medicines, order online with automated bills, and consult doctors.</p>
+                    <button class="btn btn-portal btn-patient">Enter Patient Portal &rarr;</button>
+                </div>
+
+                <!-- Doctor Portal Card -->
+                <div class="portal-card card-doctor" onclick="openDedicatedLogin('DOCTOR')">
+                    <div class="portal-icon icon-doctor">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>
+                    </div>
+                    <h3>Doctor Portal</h3>
+                    <p>Evaluate patient appointments, review symptoms, and issue certified digital prescriptions.</p>
+                    <button class="btn btn-portal btn-doctor">Enter Doctor Portal &rarr;</button>
+                </div>
+
+                <!-- Pharmacist Portal Card -->
+                <div class="portal-card card-pharmacist" onclick="openDedicatedLogin('PHARMACIST')">
+                    <div class="portal-icon icon-pharmacist">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+                    </div>
+                    <h3>Pharmacist Portal</h3>
+                    <p>Live inventory management, real-time stock & expiry alerts, and order dispensing.</p>
+                    <button class="btn btn-portal btn-pharmacist">Enter Pharmacist Portal &rarr;</button>
+                </div>
+
+                <!-- Admin Portal Card -->
+                <div class="portal-card card-admin" onclick="openDedicatedLogin('ADMIN')">
+                    <div class="portal-icon icon-admin">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 17V7h6v10"/><path d="M9 12h6"/></svg>
+                    </div>
+                    <h3>Admin Portal</h3>
+                    <p>Central user administration, add staff & doctors, generate revenue & inventory audits.</p>
+                    <button class="btn btn-portal btn-admin">Enter Admin Portal &rarr;</button>
+                </div>
+            </div>
+
+            <!-- Footer Details -->
+            <div class="gateway-footer">
+                <strong>Project Team:</strong> Ashin Prakashan, Hriday Satheesh, Jithaan RS, Yadunandan P<br>
+                <span>Project Guide: Prof. Navya N.C, Assistant Professor, Dept. of CSE</span>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- 2. DEDICATED SEPARATE LOGIN SCREEN FOR EACH ROLE         -->
+    <!-- ========================================================= -->
+    <div id="dedicatedLoginScreen" class="login-screen" style="display:none;">
+        <div class="login-card">
+            <!-- Back to Portals directory button -->
+            <div style="margin-bottom:1rem;">
+                <button type="button" class="btn btn-outline btn-sm" onclick="showPortalDirectory()" style="font-weight:700;">
+                    &larr; Back to Portal Directory
+                </button>
+            </div>
+
+            <!-- Role Badge Header -->
+            <div class="login-brand">
+                <div class="role-badge-pill" id="dedicatedPortalBadge">PATIENT PORTAL</div>
+                <h1 class="login-title" id="dedicatedPortalTitle">Patient Login Gateway</h1>
+                <p class="login-subtitle" id="dedicatedPortalDesc">Access your prescriptions, online orders, and doctor appointments.</p>
+            </div>
+
+            <!-- Patient Tabs (Only shown if role === PATIENT) -->
+            <div class="login-tabs" id="patientOnlyTabs" style="display:none;">
+                <button class="login-tab active" id="tabSignIn" onclick="switchLoginTab('signin')">Sign In</button>
+                <button class="login-tab" id="tabRegister" onclick="switchLoginTab('register')">New Patient Registration</button>
+            </div>
+
+            <!-- Error Banner -->
+            <div id="loginAlert" class="alert-banner" style="display:none;"></div>
+
+            <!-- Dedicated Sign In Form -->
+            <form id="signInForm" onsubmit="handleDedicatedSignIn(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address / Username:</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="Enter your registered email..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Password:</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="btnSubmitLogin" style="padding:0.75rem; font-weight:700;">
+                    Sign In to Portal
+                </button>
+
+                <!-- Quick Test Credentials Fill for this specific role -->
+                <div class="demo-login-section">
+                    <div class="demo-login-header">
+                        <span>PRE-CONFIGURED TEST CREDENTIALS:</span>
+                    </div>
+                    <div id="roleCredentialHelper" style="margin-top:0.5rem;">
+                        <!-- Injected based on active portal -->
+                    </div>
+                </div>
+            </form>
+
+            <!-- New Patient Registration Form (Shown only on Patient portal when tab is clicked) -->
+            <form id="registerForm" style="display:none;" onsubmit="handleRegisterSubmit(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name:</label>
+                        <input type="text" id="regName" class="form-control" placeholder="e.g. Yadunandan P" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number:</label>
+                        <input type="tel" id="regPhone" class="form-control" placeholder="+91 97450 12345" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email Address:</label>
+                        <input type="email" id="regEmail" class="form-control" placeholder="yourname@gmail.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" id="regPassword" class="form-control" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Blood Group:</label>
+                        <select id="regBlood" class="form-control">
+                            <option value="O+">O+</option>
+                            <option value="A+">A+</option>
+                            <option value="B+">B+</option>
+                            <option value="AB+">AB+</option>
+                            <option value="O-">O-</option>
+                            <option value="A-">A-</option>
+                            <option value="B-">B-</option>
+                            <option value="AB-">AB-</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date of Birth:</label>
+                        <input type="date" id="regDob" class="form-control" value="2003-08-15">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Residential Delivery Address:</label>
+                    <textarea id="regAddress" class="form-control" rows="2" placeholder="House name, street, Mattanur / Kannur, Kerala..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-accent btn-block" style="padding:0.75rem; font-weight:700;">
+                    Complete Registration & Enter
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- 3. MAIN WORKSPACE (STRICT ROLE ISOLATION - NO ROLE SWITCH)-->
+    <!-- ========================================================= -->
+    <div id="appWorkspace" style="display:none;">
+        <!-- Top Navigation -->
+        <header class="navbar">
+            <div class="nav-brand">
+                <div class="brand-logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="10"/></svg>
+                </div>
+                <div>
+                    <span class="brand-title">St. Thomas Pharmacy</span>
+                    <span class="brand-subtitle" id="navSubtitle">Online Medicine Access & Doctor Consultation</span>
+                </div>
+            </div>
+
+            <!-- User Information & Logout Button (NO SWITCH ROLE BUTTONS!) -->
+            <div class="nav-user">
+                <div class="user-badge">
+                    <span class="user-avatar" id="navAvatar">U</span>
+                    <div class="user-details">
+                        <span class="user-name" id="navUserName">Loading...</span>
+                        <span class="user-role-badge" id="navUserRole">ROLE</span>
+                    </div>
+                </div>
+                <button class="btn btn-outline-danger btn-sm" onclick="logout()" title="Logout from Portal">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    Logout
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Workspace Body -->
+        <div class="workspace">
+            <!-- Sidebar Navigation -->
+            <aside class="sidebar">
+                <div>
+                    <div class="sidebar-section-title" id="portalMenuTitle">MENU</div>
+                    <nav class="sidebar-menu" id="sidebarMenu">
+                        <!-- Injected strictly based on active user role -->
+                    </nav>
+                </div>
+
+                <!-- College Meta Footer -->
+                <div class="sidebar-footer">
+                    <div class="project-pill">Academic Year 2026-27</div>
+                    <div class="college-info">
+                        <strong>St. Thomas College of Engg & Tech</strong><br>
+                        Group 10 | Guide: Prof. Navya N.C
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="content-area">
+                <!-- Notifications Banner -->
+                <div id="alertContainer"></div>
+
+                <!-- Views Container -->
+                <div id="viewsContainer">
+                    <!-- Dynamic views loaded strictly for logged in role -->
+                </div>
+            </main>
+        </div>
+
+        <!-- Floating Cart Drawer (Patient View Only) -->
+        <div id="cartDrawer" class="cart-drawer">
+            <div class="cart-header">
+                <h3>Shopping Cart (<span id="cartCount">0</span>)</h3>
+                <button class="close-btn" onclick="toggleCart(false)">&times;</button>
+            </div>
+            <div class="cart-items" id="cartItemsList">
+                <p class="empty-state">Your cart is empty.</p>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-summary-row">
+                    <span>Subtotal:</span>
+                    <strong id="cartSubtotal">₹0.00</strong>
+                </div>
+                <div class="cart-summary-row">
+                    <span>GST (5%):</span>
+                    <strong id="cartTax">₹0.00</strong>
+                </div>
+                <div class="cart-summary-row total">
+                    <span>Total Amount:</span>
+                    <strong id="cartTotal">₹0.00</strong>
+                </div>
+                <div class="delivery-address-group">
+                    <label for="cartAddress">Delivery Address:</label>
+                    <textarea id="cartAddress" rows="2" placeholder="Enter delivery address in Kannur / nearby..."></textarea>
+                </div>
+                <button class="btn btn-primary btn-block" onclick="checkoutOrder()">
+                    Confirm & Place Order
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal Backdrop -->
+        <div id="modalOverlay" class="modal-overlay" onclick="closeModal()">
+            <div class="modal-box" onclick="event.stopPropagation()" id="modalContent">
+                <!-- Injected modal content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script src="js/app.js?v=4"></script>
+</body>
+</html>
